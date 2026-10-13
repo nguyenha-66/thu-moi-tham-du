@@ -38,7 +38,7 @@ nav.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:
 nav.tabs button{appearance:none;border:0;background:none;color:var(--muted);font:600 15px var(--f-body);padding:10px 14px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
 nav.tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--gold)}
 nav.tabs .count{font-size:12px;background:var(--chip);color:var(--navy);border-radius:99px;padding:1px 8px;margin-left:6px}
-.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:20px;align-items:start}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,620px);gap:20px;align-items:start}
 @media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:16px;min-width:0}
 .field{display:grid;gap:6px}
@@ -149,10 +149,10 @@ textarea:focus{outline:2px solid var(--sky);outline-offset:1px}
         <div class="seg" id="sal"><button type="button" data-v="Anh" aria-pressed="false">Anh</button><button type="button" data-v="Chị" aria-pressed="true">Chị</button></div>
       </div>
       <label class="field"><span>Họ và tên khách mời</span><input type="text" id="fullName" placeholder="Ví dụ: Nguyễn Thị Lan" maxlength="60"></label>
-      <div class="field"><span>Mẫu thư mời</span>
+      <div class="field" hidden><span>Mẫu thư mời</span>
         <div class="tpls" id="tpls">
-          <button type="button" class="tpl" data-v="co-anh" aria-pressed="true"><img src="tpl-co-anh.jpg" alt="Mẫu có ảnh"><b>Có ảnh</b></button>
-          <button type="button" class="tpl" data-v="khong-anh" aria-pressed="false"><img src="tpl-khong-anh.jpg" alt="Mẫu không ảnh, có lịch trình"><b>Không ảnh, có lịch trình</b></button>
+          <button type="button" class="tpl" data-v="co-anh" aria-pressed="true"><b>Có ảnh</b></button>
+          <button type="button" class="tpl" data-v="khong-anh" aria-pressed="false"><b>Không ảnh, có lịch trình</b></button>
         </div>
       </div>
       <div class="style-box" id="styleBox">
@@ -186,7 +186,7 @@ textarea:focus{outline:2px solid var(--sky);outline-offset:1px}
           <button type="button" class="btn sm" id="fReset">Về kiểu mặc định</button>
         </div>
       </div>
-      <div class="field" id="photoBlock"><span>Ảnh khách mời</span>
+      <div class="field" id="photoBlock"><span>Ảnh khách mời (không bắt buộc, không có ảnh thì giữ vòng tròn trang trí)</span>
         <div class="drop" id="drop" tabindex="0" role="button"><strong>Chọn ảnh</strong>, kéo thả ảnh vào đây, hoặc dán ảnh (Ctrl+V)
           <div class="hint" id="photoName">Chưa có ảnh</div></div>
         <input type="file" id="photoInput" accept="image/*" hidden>
@@ -224,7 +224,7 @@ textarea:focus{outline:2px solid var(--sky);outline-offset:1px}
       </div>
     </div>
     <div class="preview">
-      <div class="canvas-box"><canvas id="pv" width="1713" height="2559" aria-label="Xem trước thư mời"></canvas></div>
+      <div class="canvas-box"><canvas id="pv" width="3318" height="2481" aria-label="Xem trước thư mời"></canvas></div>
     </div>
   </section>
 
@@ -257,7 +257,7 @@ textarea:focus{outline:2px solid var(--sky);outline-offset:1px}
           <input type="file" id="rowImgInput" accept="image/*" hidden>
         </div></div>
         <div class="step"><i></i><div class="field"><b>Tạo thư mời</b>
-          <label class="field"><span>Mẫu thư mời</span>
+          <label class="field" hidden><span>Mẫu thư mời</span>
             <select id="bulkTpl">
               <option value="auto">Tự động: khách có ảnh dùng mẫu Có ảnh, khách không có ảnh dùng mẫu Không ảnh</option>
               <option value="co-anh">Tất cả dùng mẫu Có ảnh</option>
@@ -281,11 +281,11 @@ textarea:focus{outline:2px solid var(--sky);outline-offset:1px}
     <div class="filters">
       <input type="text" id="hq" placeholder="Tìm theo tên khách hoặc người làm">
       <select id="hTeam"><option value="">Tất cả team</option><option>Team Đại lý</option><option>Team Kinh doanh</option><option>Quầy Sức Khỏe</option><option>Khác</option></select>
-      <select id="hTpl"><option value="">Tất cả mẫu</option><option value="co-anh">Có ảnh</option><option value="khong-anh">Không ảnh</option></select>
+      <select id="hTpl" hidden><option value="">Tất cả mẫu</option><option value="co-anh">Có ảnh</option><option value="khong-anh">Không ảnh</option></select>
       <button type="button" class="btn" id="dlHist">Xuất lịch sử ra Excel</button>
     </div>
     <div class="tablewrap"><table>
-      <thead><tr><th>Thời gian</th><th>Người làm</th><th>Team</th><th>Khách mời</th><th>Mẫu</th><th>Cách tạo</th><th></th></tr></thead>
+      <thead><tr><th>Thời gian</th><th>Người làm</th><th>Team</th><th>Khách mời</th><th>Ảnh</th><th>Cách tạo</th><th></th></tr></thead>
       <tbody id="histBody"><tr><td colspan="7" class="empty">Chưa có thư mời nào. Thư mời đầu tiên bạn tải về sẽ được ghi lại ở đây.</td></tr></tbody>
     </table></div>
   </section>
@@ -310,13 +310,12 @@ var firebaseConfig = {
 (() => {
 const $ = s => document.querySelector(s);
 const TPL = {
-  'co-anh':    { src:'tpl-co-anh.jpg', w:1713, h:2559, name:{x:855, y:364, color:'rgb(12,95,145)', maxW:1180},
-                 circle:{x:855, y:1035, r:420}, label:'Có ảnh' },
-  'khong-anh': { src:'tpl-khong-anh.jpg', w:1710, h:2562, name:{x:855, y:281, color:'rgb(16,100,158)', maxW:1180}, label:'Không ảnh' },
+  'co-anh': { src:'thiep.jpg', w:3318, h:2481, name:{x:2490, y:372, color:'rgb(12,95,145)', maxW:1250, size:100},
+              circle:{x:2490, y:990, r:390}, patch:{src:'thiep-vong.png', x:1992, y:492}, label:'Thư mời' },
 };
 const imgCache = {};
 function loadImg(src){
-  if (!imgCache[src]) imgCache[src] = new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = src; });
+  if (!imgCache[src]) imgCache[src] = new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => { delete imgCache[src]; bad(new Error('img')); }; i.src = src; });
   return imgCache[src];
 }
 const fontReady = (async () => { try { await document.fonts.load('800 80px Montserrat', 'ĐÂỆỮễị'); } catch(e){} })();
@@ -366,9 +365,10 @@ async function render(canvas, o){
   canvas.width = t.w; canvas.height = t.h;
   const ctx = canvas.getContext('2d');
   ctx.drawImage(bg, 0, 0, t.w, t.h);
-  if (t.circle){
+  if (t.circle && o.photo){
     const c = t.circle;
-    // frame: soft shadow, gold rim, white mat, then the photo
+    // cover the printed glass ring, then frame: soft shadow, gold rim, white mat, then the photo
+    if (t.patch) ctx.drawImage(await loadImg(t.patch.src), t.patch.x, t.patch.y);
     ctx.save();
     ctx.shadowColor = 'rgba(15,76,129,.35)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 18;
     const rim = ctx.createLinearGradient(c.x - c.r, c.y - c.r, c.x + c.r, c.y + c.r);
@@ -376,13 +376,6 @@ async function render(canvas, o){
     ctx.fillStyle = rim; ctx.beginPath(); ctx.arc(c.x, c.y, c.r + 34, 0, Math.PI*2); ctx.fill();
     ctx.restore();
     ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(c.x, c.y, c.r + 24, 0, Math.PI*2); ctx.fill();
-    if (!o.photo){
-      const g = ctx.createLinearGradient(0, c.y - c.r, 0, c.y + c.r);
-      g.addColorStop(0, '#e6f3fc'); g.addColorStop(1, '#c9e4f7');
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = 'rgba(12,95,145,.45)'; ctx.font = '700 64px "Be Vietnam Pro", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('Ảnh khách mời', c.x, c.y);
-    }
     if (o.photo){
       const im = o.photo, z = o.zoom || 1;
       const sc = Math.max(2*c.r/im.naturalWidth, 2*c.r/im.naturalHeight) * z;
@@ -400,7 +393,7 @@ async function render(canvas, o){
   const st = { ...DEFAULT_STYLE, ...(o.style || {}) };
   const [fam, wt] = st.font.split('|');
   await loadFont(fam, wt);
-  let size = Math.round(112 * st.size / 100);
+  let size = Math.round((t.name.size || 112) * st.size / 100);
   ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
   do { ctx.font = `${wt} ${size}px "${fam}", Montserrat, "Segoe UI", sans-serif`; size -= 2; } while (ctx.measureText(text).width > t.name.maxW && size > 36);
   size += 2;
@@ -508,7 +501,7 @@ function renderHist(){
     const tr = document.createElement('tr');
     const cells = [fmtTime(r.createdAt), r.maker || 'Không rõ', r.team || '', `${r.guestSal} ${r.guestName}`];
     for (const c of cells){ const td = document.createElement('td'); td.textContent = c; tr.appendChild(td); }
-    const t1 = document.createElement('td'); t1.innerHTML = `<span class="pill ${r.tpl==='co-anh'?'gold':''}">${TPL[r.tpl]?.label || r.tpl}</span>`; tr.appendChild(t1);
+    const t1 = document.createElement('td'); t1.innerHTML = r.hasPhoto ? '<span class="pill gold">Có ảnh</span>' : '<span class="pill">Không ảnh</span>'; tr.appendChild(t1);
     const t2 = document.createElement('td'); t2.innerHTML = `<span class="pill">${r.mode === 'excel' ? 'Excel' : 'Thủ công'}</span>`; tr.appendChild(t2);
     const t3 = document.createElement('td'); const b = document.createElement('button'); b.className='btn sm'; b.type='button'; b.textContent='Tải lại';
     b.onclick = () => redownload(r, b); t3.appendChild(b); tr.appendChild(t3);
@@ -528,7 +521,7 @@ async function redownload(r, btn){
 ['#hq','#hTeam','#hTpl'].forEach(s => $(s).addEventListener('input', renderHist));
 $('#dlHist').onclick = async () => {
   const rows = HIST.map(r => ({ 'Thời gian': new Date(r.createdAt).toLocaleString('vi-VN'), 'Người làm': r.maker, 'Team': r.team,
-    'Danh xưng': r.guestSal, 'Họ và tên khách': r.guestName, 'Mẫu': TPL[r.tpl]?.label || r.tpl, 'Cách tạo': r.mode === 'excel' ? 'Excel' : 'Thủ công' }));
+    'Danh xưng': r.guestSal, 'Họ và tên khách': r.guestName, 'Ảnh': r.hasPhoto ? 'Có ảnh' : 'Không ảnh', 'Cách tạo': r.mode === 'excel' ? 'Excel' : 'Thủ công' }));
   const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), 'Lịch sử');
   const buf = XLSX.write(wb, { type:'array', bookType:'xlsx' });
   await saveFile('Lịch sử tạo thư mời.xlsx', new Blob([buf]));
@@ -670,7 +663,6 @@ $('#dlOne').onclick = async () => {
   const who = requireMaker(); if (!who) return;
   const name = titleCase($('#fullName').value);
   if (!name){ $('#fullName').focus(); toast('Nhập họ và tên khách mời.'); return; }
-  if (S.tpl === 'co-anh' && !S.photo){ toast('Mẫu Có ảnh cần ảnh khách. Thêm ảnh hoặc chọn mẫu Không ảnh.'); return; }
   $('#fullName').value = name;
   const btn = $('#dlOne'); btn.disabled = true;
   try {
@@ -686,8 +678,8 @@ $('#dlOne').onclick = async () => {
 
 /* ---------- lời nhắn gửi kèm ---------- */
 const PRESETS = [
-  { id:"p-trangtrong", title:"Trang trọng", body:"Kính gửi {Anh/Chị} {họ tên},\n\nQuầy Sức Khỏe trân trọng kính mời {anh/chị} đến dự Lễ khai trương vào Thứ 7, ngày 17/10/2026\nThời gian: từ 7h00 đến 16h00.\nĐịa chỉ: Số 3B Ngách 2/134 đường Vũ Văn Cẩn, Vạn Phúc, Hà Đông.\n(Gửi xe tại Nhà văn hóa tổ dân phố Hạnh Phúc)\n\n{Anh/Chị} tham gia nhóm Zalo bằng link dưới đây để nhận thông tin mã quay thưởng và cập nhật thông tin về sự kiện nhé\nhttps://zalo.me/g/xllqcrljskjl7ozqejot\n\nSự có mặt của {anh/chị} là niềm vinh hạnh của Quầy. Thư mời em xin gửi kèm tin nhắn này. Hẹn gặp lại {anh/chị} vào thứ 7 nhé!\n\nTrân trọng," },
-  { id:"p-thanmat", title:"Thân mật", body:"{Anh/Chị} {tên} ơi, Thứ 7 ngày 17/10 này Quầy Sức Khỏe sẽ khai trương. Em gửi {anh/chị} thư mời, {anh/chị} sắp xếp ghé qua Quầy với chúng em nhé.\n\nHôm đó có đo xương, phân tích 16 chỉ số cơ thể, xét nghiệm máu, quay số may mắn cùng nhiều hoạt động khác. Quầy mở từ 7h đến 16h tại số 3B Ngách 2/134 Vũ Văn Cẩn, Vạn Phúc, Hà Đông. Gửi xe ở Nhà văn hóa tổ dân phố Hạnh Phúc ạ.\n\n{Anh/Chị} tham gia link này để nhận mã quay thưởng và thông tin sự kiện nhé\nhttps://zalo.me/g/xllqcrljskjl7ozqejot\n\nRất vui được gặp {anh/chị} tại quầy vào thứ 7 này!" },
+  { id:"p-trangtrong", title:"Trang trọng", body:"Kính gửi {Anh/Chị} {họ tên},\n\nQuầy Sức Khỏe trân trọng kính mời {anh/chị} đến dự Lễ khai trương vào Thứ 7, ngày 17/10/2026\nThời gian: từ 7h00 đến 16h00.\nĐịa chỉ: Số 3B Ngách 2/134 đường Vũ Văn Cẩn, Vạn Phúc, Hà Đông.\n(Gửi xe tại Tòa nhà Thiên Sơn Plaza)\n\n{Anh/Chị} tham gia nhóm Zalo bằng link dưới đây để nhận thông tin mã quay thưởng và cập nhật thông tin về sự kiện nhé\nhttps://zalo.me/g/xllqcrljskjl7ozqejot\n\nSự có mặt của {anh/chị} là niềm vinh hạnh của Quầy. Thư mời em xin gửi kèm tin nhắn này. Hẹn gặp lại {anh/chị} vào thứ 7 nhé!\n\nTrân trọng," },
+  { id:"p-thanmat", title:"Thân mật", body:"{Anh/Chị} {tên} ơi, Thứ 7 ngày 17/10 này Quầy Sức Khỏe sẽ khai trương. Em gửi {anh/chị} thư mời, {anh/chị} sắp xếp ghé qua Quầy với chúng em nhé.\n\nHôm đó có đo xương, phân tích 16 chỉ số cơ thể, xét nghiệm máu, quay số may mắn cùng nhiều hoạt động khác. Quầy mở từ 7h đến 16h tại số 3B Ngách 2/134 Vũ Văn Cẩn, Vạn Phúc, Hà Đông. Gửi xe ở Tòa nhà Thiên Sơn Plaza ạ.\n\n{Anh/Chị} tham gia link này để nhận mã quay thưởng và thông tin sự kiện nhé\nhttps://zalo.me/g/xllqcrljskjl7ozqejot\n\nRất vui được gặp {anh/chị} tại quầy vào thứ 7 này!" },
   { id:"p-ngangon", title:"Ngắn gọn", body:"Trân trọng kính mời {Anh/Chị} {họ tên} dự Lễ khai trương Quầy Sức Khỏe, từ 7h00 đến 16h00, Thứ 7 ngày 17/10/2026, tại số 3B Ngách 2/134 Vũ Văn Cẩn, Vạn Phúc, Hà Đông.\n{Anh/Chị} tham gia link này để nhận mã quay thưởng và thông tin sự kiện nhé!\nhttps://zalo.me/g/xllqcrljskjl7ozqejot" },
 ];
 let TEAM_CONTENTS = [];
@@ -944,13 +936,8 @@ wireDrop($('#imgsDrop'), $('#imgsInput'), files => {
   renderBulk();
 });
 $('#bulkTpl').onchange = renderBulk;
-function effTpl(r){
-  const mode = $('#bulkTpl').value;
-  if (mode !== 'auto') return mode;
-  if (r.tplRaw) return r.tplRaw;
-  return r.photo ? 'co-anh' : 'khong-anh';
-}
-function plan(){ return B.rows.map(r => { const tpl = effTpl(r); return { r, ph:r.photo, tpl, miss: tpl === 'co-anh' && !r.photo }; }); }
+function effTpl(r){ return 'co-anh'; }
+function plan(){ return B.rows.map(r => { const tpl = effTpl(r); return { r, ph:r.photo, tpl, miss: false }; }); }
 
 /* photo picker for one row */
 let pickRow = null;
@@ -1003,7 +990,7 @@ function renderBulk(){
       const it = id ? B.files[+id] : addFiles([...e.dataTransfer.files])[0];
       if (it){ B.rows.forEach(x => { if (x.photo === it) x.photo = null; }); r.photo = it; renderBulk(); }
     };
-    const t1 = document.createElement('td'); t1.innerHTML = `<span class="pill ${tpl==='co-anh'?'gold':''}">${TPL[tpl].label}</span>`; tr.appendChild(t1);
+    const t1 = document.createElement('td'); t1.innerHTML = ph ? '<span class="pill gold">Có ảnh</span>' : '<span class="pill">Không ảnh</span>'; tr.appendChild(t1);
     const t3 = document.createElement('td');
     t3.innerHTML = r.status === 'done' ? '<span class="pill ok">Đã tạo</span>' : miss ? '<span class="pill bad">Thiếu ảnh</span>' : '<span class="pill">Sẵn sàng</span>';
     tr.appendChild(t3); tb.appendChild(tr);
@@ -1034,7 +1021,7 @@ $('#runBulk').onclick = async () => {
   try {
     for (let i = 0; i < todo.length; i++){
       const { r, ph, tpl } = todo[i];
-      const photo = tpl === 'co-anh' ? await fileToImage(ph.file) : null;
+      const photo = ph ? await fileToImage(ph.file) : null;
       const fit = photo ? await autoFocus(photo) : { zoom:1, ox:0, oy:0 };
       await render(c, { tpl, sal:r.sal, name:r.name, photo, ...fit, style:S.style });
       msgs.push({ 'STT': r.stt, 'Danh xưng': r.sal, 'Họ và tên': r.name, 'Lời nhắn': fillContent(currentContentBody(), r.sal, r.name) });
